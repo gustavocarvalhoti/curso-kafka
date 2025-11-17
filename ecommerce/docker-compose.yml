@@ -1,20 +1,30 @@
 version: '3.8'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+    image: wurstmeister/zookeeper
+    container_name: zokeeper
     ports:
       - "2181:2181"
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: wurstmeister/kafka
+    container_name: kafka-produto
     depends_on:
       - zookeeper
     ports:
       - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  #Cria o topico que precisamos
+  init-kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - kafka
+    entrypoint: ['bin/sh', '-c']
+    command: |
+      "
+        cd opt/kafka_2.13-2.8.1/bin
+        kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 3 --topic produto-nome
+      "

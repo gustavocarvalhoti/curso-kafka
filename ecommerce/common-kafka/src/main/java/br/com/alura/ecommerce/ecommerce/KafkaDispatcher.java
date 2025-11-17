@@ -39,8 +39,8 @@ public class KafkaDispatcher<T> implements Closeable {
                     "sucesso enviando " + data.topic() +
                             ":::partition " + data.partition() +
                             "/ offset " + data.offset() +
-                            "/ timestamp " + data.timestamp())
-            ;
+                            "/ timestamp " + data.timestamp()
+            );
         };
 
         producer.send(record, callback).get();
