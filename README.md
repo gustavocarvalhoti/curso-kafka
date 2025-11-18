@@ -1,6 +1,6 @@
 # curso-kafka:.
 
-![img_15.png](img_15.png) <br>
+![img_19.png](img_19.png) <br>
 
 ## Anotações gerais:.
 
@@ -43,11 +43,17 @@ $ bin/kafka-topics.sh --describe --bootstrap-server localhost:9093
 ## Configuration o banco sqlite:.
 
 ![img.png](img.png) <br>
+
 Criar o banco na pasta target/users_database.db com ajuda do sqlitestudio <br>
+
 ![img_1.png](img_1.png) <br>
-Apontar corretamente a pasta target do start do projeto<br>
+
+Apontar corretamente a pasta target do start do projeto <br>
+
+Quando roda o createUserService pela primeira vez ele cria a tabela, depois comentar. <br>
+
 ![img_2.png](img_2.png) <br>
-Quando roda o createUserService pela primeira vez ele cria a tabela, depois comentar.
+
 ![img_3.png](img_3.png) <br>
 
 ## Criando um novo serviço:.
@@ -70,12 +76,18 @@ CreateUserService (Grava os usuarios no banco de dados)
 FraudeDetectorService (Topico que processa as nova ordens)
 LogService (Loga as mensagens)
 EmailService (Envia o email para o usuário)
+ReadingReportService (Gera o relatorio de usuario)
+BatchSendMessageService (Gera o relatorio de todos os usuarios)
 
 NewOrderMain (Gera 10 ordens) <- Ultimo (Quando os outros estiverem rodando)
 HttpEccomerceService <- Para receber as requests via get no Browser
 ````
 
 ![img_4.png](img_4.png) <br>
+
+Lembre-se de ajustar o working directory das aplicações. <br>
+
+![img_20.png](img_20.png) <br>
 
 ## Interação de um serviço web com o Kafka:.
 
@@ -84,6 +96,7 @@ Utilizei o jetty para ser simples - https://jetty.org/
 doGet - Get que estamos acostumados
 localhost:8080/new  <- Chama nossa API
 localhost:8080/new?email=gustavocarvalho.ti@gmail.com&amount=153  <- Chama nossa API
+localhost:8080/admin/generate-reports
 ````
 
 ## Fast delegate:.
@@ -91,6 +104,7 @@ localhost:8080/new?email=gustavocarvalho.ti@gmail.com&amount=153  <- Chama nossa
 ````
 Quanto menos codigo no HTTP mais facil de replicar
 Colocar minimo de processamento possível
+Dar a resposta o mais rápido possível
 ````
 
 ## Single point of failure do broker:.
@@ -111,7 +125,9 @@ Quando o Leader: 0 cair precisa ir para a replica
 $ bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic ECOMMERVE_NEW_ORDER --partitions 3 --replication-factor 2 (Ver a foto abaixo, precisa add antes) 
 ````
 
-![img_5.png](img_5.png) <br>Adicionar essa propriedade nos 2 brokers <br>
+![img_5.png](img_5.png) <br>
+
+Adicionar essa propriedade nos 2 brokers <br>
 
 ## Apagando os dados do diretorio
 
@@ -128,20 +144,31 @@ $ rm -fr ../data/zookeeper/*
 ## Definição basica dos topicos
 
 ![img_9.png](img_9.png) <br>
+
 ![img_7.png](img_7.png) <br>
+
 ![img_8.png](img_8.png) <br>
+
 4 Brokers <br>
+
 ![img_10.png](img_10.png) <br>
+
 Mudar de todos: broker.id, logs.dirs, listeners (Mudar a porta) <br>
 Pode apagar os diretorios que ele cria sozinho <br>
+
 ![img_11.png](img_11.png) <br>
+
 Logs do Zookeeper <br>
+
 ![img_12.png](img_12.png) <br>
+
 Os leader são escolhidos automaticamente <br>
+
 ![img_13.png](img_13.png) <br>
 
 ## Acks e reliability
 
+````
 Imagine que enviamos a mensagem e temos cinco máquinas rodando o cluster. Quatro delas saíram do ar e nós enviamos a
 mensagem. A mensagem chega nessa única e não replicou ainda. O que acontece?
 
@@ -168,7 +195,28 @@ NewOrderServlet.java, na linha 40, chamamos um get() em KafkaDispatcher.java.
 
 0 = Não se preocupa - não retenta <br>
 1 = O leader escreve no log local e não espera as replicas (Se as replicas não pegaram a informação se perde) <br>
-all = Ele espera todas as replicas darem OK para confirmar o recebimento da mensagem <br>
+all = Ele espera todas as réplicas darem OK para confirmar o recebimento da mensagem <br>
+````
 
 ![img_14.png](img_14.png) <br>
-Quando um serviço cai precisa levantar outro rápido <br>
+
+Quando um serviço cai precisa levantar outro rápido. <br>
+
+## Novo projeto Reading Report
+
+````
+Pedido de geração de relatório
+Relatório de 1 usuário
+````
+
+Cria o diretorio e subescreve caso necessario. <br>
+
+![img_16.png](img_16.png) <br>
+
+Escreva no final do arquivo <br>
+
+![img_17.png](img_17.png) <br>
+
+Os relatórios serão gerados na pasta target <br>
+
+![img_18.png](img_18.png) <br>

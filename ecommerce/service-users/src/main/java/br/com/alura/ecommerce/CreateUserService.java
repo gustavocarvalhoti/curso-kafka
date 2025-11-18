@@ -1,4 +1,4 @@
-package br.com.alura.ecommerce.ecommerce;
+package br.com.alura.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
@@ -15,14 +15,14 @@ public class CreateUserService {
     CreateUserService() throws SQLException {
         String url = "jdbc:sqlite:target/users_database.db";
         connection = DriverManager.getConnection(url);
-
-        /*
-        connection.createStatement().execute("create table Users (" +
-                "uuid varchar(200) primary key," +
-                "email varchar(200))");
-         */
-
-        //insertNewUser("gustavocarvalho.ti@gmail.com");
+        try {
+            connection.createStatement().execute("create table Users (" +
+                    "uuid varchar(200) primary key," +
+                    "email varchar(200))");
+        } catch(SQLException ex) {
+            // be careful, the sql could be wrong, be reallllly careful
+            ex.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws SQLException {
@@ -41,7 +41,7 @@ public class CreateUserService {
         System.out.println("Processing new order, checking for new user");
         System.out.println(record.value());
         var order = record.value();
-        if (isNewUser(order.getEmail())) {
+        if(isNewUser(order.getEmail())) {
             insertNewUser(order.getEmail());
         }
     }
