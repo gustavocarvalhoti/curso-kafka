@@ -28,6 +28,8 @@
         <module>common-kafka</module>
         <module>service-users</module>
         <module>service-http-ecommerce</module>
+        <module>service-reading-report</module>
+        <module>service-deadletter</module>
     </modules>
 
     <dependencies>

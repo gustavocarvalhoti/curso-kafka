@@ -5,13 +5,13 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class EmailService {
+public class DeadletterService {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        var emailService = new EmailService();
-        try (var service = new KafkaService(EmailService.class.getSimpleName(),
-                "ECOMMERCE_SEND_EMAIL",
-                emailService::parse,
+        var deadletterService = new DeadletterService();
+        try (var service = new KafkaService(DeadletterService.class.getSimpleName(),
+                "ECOMMERCE_DEADLETTER",
+                deadletterService::parse,
                 Map.of())) {
             service.run();
         }
@@ -19,19 +19,10 @@ public class EmailService {
 
     private void parse(ConsumerRecord<String, Message<String>> record) {
         System.out.println("------------------------------------------");
-        System.out.println("Send email");
+        System.out.println("Mensagem com erro!");
         System.out.println(record.key());
         System.out.println(record.value());
         System.out.println(record.partition());
         System.out.println(record.offset());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // ignoring
-            e.printStackTrace();
-        }
-        System.out.println("Email sent");
     }
-
-
 }

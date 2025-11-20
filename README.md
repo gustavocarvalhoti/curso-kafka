@@ -38,22 +38,17 @@ $ bin/kafka-server-start.sh config/server.properties
 $ bin/kafka-server-start.sh config/servers.properties
 $ bin/kafka-topics.sh --describe --bootstrap-server localhost:9092
 $ bin/kafka-topics.sh --describe --bootstrap-server localhost:9093
+$ bin/kafka-consumer-groups.sh --all-groups --bootstrap-server localhost:9091 --describe (Lista os grupos rodando)
 ````
 
 ## Configuration o banco sqlite:.
 
 ![img.png](img.png) <br>
-
 Criar o banco na pasta target/users_database.db com ajuda do sqlitestudio <br>
-
 ![img_1.png](img_1.png) <br>
-
 Apontar corretamente a pasta target do start do projeto <br>
-
 Quando roda o createUserService pela primeira vez ele cria a tabela, depois comentar. <br>
-
 ![img_2.png](img_2.png) <br>
-
 ![img_3.png](img_3.png) <br>
 
 ## Criando um novo serviço:.
@@ -78,16 +73,16 @@ LogService (Loga as mensagens)
 EmailService (Envia o email para o usuário)
 ReadingReportService (Gera o relatorio de usuario)
 BatchSendMessageService (Gera o relatorio de todos os usuarios)
+DeadletterService (Topico de mensagens com erro)
 
 NewOrderMain (Gera 10 ordens) <- Ultimo (Quando os outros estiverem rodando)
 HttpEccomerceService <- Para receber as requests via get no Browser
 ````
-
+![img_29.png](img_29.png) <br>
 ![img_4.png](img_4.png) <br>
-
-Lembre-se de ajustar o working directory das aplicações. <br>
-
+Lembre-se de ajustar o working directory das aplicações. \$MODULE_WORKING_DIR\$ <br>
 ![img_20.png](img_20.png) <br>
+![img_30.png](img_30.png) <br>
 
 ## Interação de um serviço web com o Kafka:.
 
@@ -126,7 +121,6 @@ $ bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic ECOMMERVE_NEW_O
 ````
 
 ![img_5.png](img_5.png) <br>
-
 Adicionar essa propriedade nos 2 brokers <br>
 
 ## Apagando os dados do diretorio
@@ -144,26 +138,16 @@ $ rm -fr ../data/zookeeper/*
 ## Definição basica dos topicos
 
 ![img_9.png](img_9.png) <br>
-
 ![img_7.png](img_7.png) <br>
-
 ![img_8.png](img_8.png) <br>
-
 4 Brokers <br>
-
 ![img_10.png](img_10.png) <br>
-
 Mudar de todos: broker.id, logs.dirs, listeners (Mudar a porta) <br>
 Pode apagar os diretorios que ele cria sozinho <br>
-
 ![img_11.png](img_11.png) <br>
-
 Logs do Zookeeper <br>
-
 ![img_12.png](img_12.png) <br>
-
 Os leader são escolhidos automaticamente <br>
-
 ![img_13.png](img_13.png) <br>
 
 ## Acks e reliability
@@ -199,7 +183,6 @@ all = Ele espera todas as réplicas darem OK para confirmar o recebimento da men
 ````
 
 ![img_14.png](img_14.png) <br>
-
 Quando um serviço cai precisa levantar outro rápido. <br>
 
 ## Novo projeto Reading Report
@@ -210,13 +193,43 @@ Relatório de 1 usuário
 ````
 
 Cria o diretorio e subescreve caso necessario. <br>
-
 ![img_16.png](img_16.png) <br>
-
 Escreva no final do arquivo <br>
-
 ![img_17.png](img_17.png) <br>
-
 Os relatórios serão gerados na pasta target <br>
-
 ![img_18.png](img_18.png) <br>
+
+## A importancia do CorrelationId
+
+````
+Trace que a mensagem percorre
+Boa pratica que concatena as informações
+Add no common-kafka -> CorrelationId
+logar o trace das informações -> 
+````
+
+## Produzir mensagens no topico
+
+![img_22.png](img_22.png) <br>
+
+## Consumir mensagens do topico
+
+![img_21.png](img_21.png) <br>
+Consome 1 mensagem e já avisa o broker <br>
+![img_23.png](img_23.png) <br>
+
+## Envio assincrono (Não espera o OK do topico)
+
+![img_25.png](img_25.png) <br>
+
+## Envio sincrono (Espera o OK do topico)
+
+![img_24.png](img_24.png) <br>
+
+## Forçando um erro no envio da mensagem
+
+![img_26.png](img_26.png) <br>
+Tentei consumir mas deu erro? Postar para a DEADLETTER, se não conseguir postar pare o serviço. <br>
+![img_27.png](img_27.png) <br>
+DEADLETTER com erro para tudo. <br>
+![img_28.png](img_28.png) <br>
