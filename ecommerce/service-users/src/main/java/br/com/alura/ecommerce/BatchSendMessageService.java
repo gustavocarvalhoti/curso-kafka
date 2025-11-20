@@ -45,7 +45,7 @@ public class BatchSendMessageService {
         var message = record.value();
         System.out.println("Topic: " + message.getPayload());
 
-        if(true) throw new RuntimeException("deu um erro que eu forcei");
+        //if(true) throw new RuntimeException("deu um erro que eu forcei");
 
         for(User user : getAllUsers()) {
             userDispatcher.sendAsync(message.getPayload(), user.getUuid(),

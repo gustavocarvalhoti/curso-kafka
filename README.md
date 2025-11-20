@@ -1,6 +1,6 @@
 # curso-kafka:.
 
-![img_19.png](img_19.png) <br>
+![img_31.png](img_31.png) <br>
 
 ## Anotações gerais:.
 
@@ -78,6 +78,7 @@ DeadletterService (Topico de mensagens com erro)
 NewOrderMain (Gera 10 ordens) <- Ultimo (Quando os outros estiverem rodando)
 HttpEccomerceService <- Para receber as requests via get no Browser
 ````
+
 ![img_29.png](img_29.png) <br>
 ![img_4.png](img_4.png) <br>
 Lembre-se de ajustar o working directory das aplicações. \$MODULE_WORKING_DIR\$ <br>
