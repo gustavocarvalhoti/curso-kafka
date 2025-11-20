@@ -1,4 +1,4 @@
-# curso-kafka:.
+# Curso-kafka-alura:.
 
 ![img_31.png](img_31.png) <br>
 
