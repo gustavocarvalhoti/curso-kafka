@@ -101,6 +101,7 @@ localhost:8080/admin/generate-reports
 Quanto menos codigo no HTTP mais facil de replicar
 Colocar minimo de processamento possível
 Dar a resposta o mais rápido possível
+Criar serviços pequenos e eles ficam observando os topicos
 ````
 
 ## Single point of failure do broker:.
@@ -234,3 +235,16 @@ Tentei consumir mas deu erro? Postar para a DEADLETTER, se não conseguir postar
 ![img_27.png](img_27.png) <br>
 DEADLETTER com erro para tudo. <br>
 ![img_28.png](img_28.png) <br>
+
+## Kafka producer e consumer
+
+````
+Producer = thread safe     = Pode usar ele em várias threads.
+
+Consumer = not thread safe = Não pode usar ele em várias threads.
+Indicado 1 consumidor por thread, consumir e despachar para processamento.
+Como melhorar isso? 
+No nosso EmailService vamos criar outra thread.
+````
+
+https://cursos.alura.com.br/course/kafka-idempotencia-e-garantias/task/66459?b2cUser=true
