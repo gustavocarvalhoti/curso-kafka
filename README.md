@@ -247,4 +247,19 @@ Como melhorar isso?
 No nosso EmailService vamos criar outra thread.
 ````
 
-https://cursos.alura.com.br/course/kafka-idempotencia-e-garantias/task/66459?b2cUser=true
+## Consumer
+
+Antigo <br>
+![img_32.png](img_32.png) <br>
+Novo <br>
+![img_33.png](img_33.png) <br>
+
+## Latest e Earliest
+
+![img_34.png](img_34.png) <br>
+
+## Lidando com mensagens duplicadas
+
+Como receber exatamento 1 vez? <br>
+
+https://cursos.alura.com.br/course/kafka-idempotencia-e-garantias
