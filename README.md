@@ -261,5 +261,7 @@ Novo <br>
 ## Lidando com mensagens duplicadas
 
 Como receber exatamento 1 vez? <br>
-
-https://cursos.alura.com.br/course/kafka-idempotencia-e-garantias
+Quando eu recebo o uuid do front eu consigo garantir que a mensagem será processada apenas 1 vez. <br>
+![img_35.png](img_35.png) <br>
+Validando com orders gravadas no banco de dados <br>
+![img_36.png](img_36.png) <br>
