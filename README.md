@@ -265,3 +265,29 @@ Quando eu recebo o uuid do front eu consigo garantir que a mensagem será proces
 ![img_35.png](img_35.png) <br>
 Validando com orders gravadas no banco de dados <br>
 ![img_36.png](img_36.png) <br>
+
+## Modulo II - Kafka e Spring: integrando aplicações e gerenciando fluxos de dados
+
+Utilizaremos o kafka templade so spring <br>
+![img_37.png](img_37.png) <br>
+Se eu tenho 2 consumers e 1 topico com 2 partições ele faz o load balance automatico <br>
+![img_38.png](img_38.png) <br>
+![img_39.png](img_39.png) <br>
+![img_40.png](img_40.png) <br>
+Ele distribui a mensagem para as 2 aplicações <br>
+
+## Configurações do consumidor
+
+![img_41.png](img_41.png) <br>
+Se tiver 10 mensagens ele traz as 10 e processa (default = 500) <br>
+Pode deixar lento a rede com um json muito grande <br>
+![img_42.png](img_42.png) <br>
+Pega as mensagens a partir do momento que sobe. <br>
+![img_43.png](img_43.png) <br>
+Pega as mensagens desde a mais antiga do topico. <br>
+![img_44.png](img_44.png) <br>
+Não cria topicos automaticamente. <br>
+![img_45.png](img_45.png) <br>
+Desativa o commit automatico, obriga a dar o ack. <br>
+![img_46.png](img_46.png) <br>
+![img_47.png](img_47.png) <br>
